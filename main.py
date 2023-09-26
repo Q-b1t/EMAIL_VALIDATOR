@@ -38,7 +38,7 @@ if __name__ == '__main__':
     assert "email" in input_data.columns, colored("[-] The file is not in the correct format. Make sure the excel book has \"email\" column.","red")
     email_list = list(set(input_data["email"].to_list()))
     if verbose:
-        print(colored(f"[+] Found {len(email_list)} valid emails.","green"))
+        print(colored(f"[+] Found {len(email_list)} potential emails.","green"))
     
     # make the api requests and parse the responses into a table
     if verbose:
