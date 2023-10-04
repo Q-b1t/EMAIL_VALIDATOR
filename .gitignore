@@ -5,3 +5,6 @@ conf_test.cfg
 tests
 auxiliary_modules/__pycache__
 venv
+*.xlsx
+*.csv
+*.txt
