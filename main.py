@@ -52,4 +52,4 @@ if __name__ == '__main__':
     # save the table
     save_table(parsed_table=merged_table,save_path=output_file,output_format=output_format,verbose=verbose)
 
-        
+    export_valid_mail_list(verified_table=merged_table,api=api,output_file=output_file,verbose=verbose)

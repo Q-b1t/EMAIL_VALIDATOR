@@ -5,7 +5,7 @@ import pandas as pd
 import os
 from termcolor import colored
 import configparser
-
+from time import sleep
 
 def get_api_key(config_file,api,verbose):
     # parse the configuration file
@@ -42,6 +42,7 @@ def debounce_api_request(mail,api_key):
 def abstract_api_request(mail,api_key):
     url = f"https://emailvalidation.abstractapi.com/v1/?api_key={api_key}&email={mail}"
     response = requests.get(url=url)
+    sleep(0.3)
     return response
 
 def read_text_file(filename):
@@ -161,3 +162,15 @@ def save_table(parsed_table,save_path,output_format,verbose):
          
     if verbose:
         print(colored(f"[+] Exporting the results to {save_path}.","green"))
+
+def export_valid_mail_list(verified_table,api,output_file,verbose):
+    if api == "abstract":
+        valid_list = verified_table[verified_table["deliverability"] == "DELIVERABLE"]["email"].to_list()
+    else:
+        valid_list = verified_table[verified_table["result"] == "Safe to Send"]["email"].to_list()
+    valid_list = [email + "\n" for email in valid_list]
+    with open(f"{output_file}.txt","w") as f:
+        f.writelines(valid_list)
+    f.close()
+    if verbose:
+        print(colored(f"[+] The valid mails were be written to {output_file}.txt","green"))
